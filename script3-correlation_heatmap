@@ -1,0 +1,23 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the dataset
+df = pd.read_csv("flightsdelay.csv")
+
+# Select numerical columns of interest (for example, ArrivalDelay, DepartureDelay, and FlightDistance)
+numerical_cols = ['ARR_DELAY', 'DEP_DELAY', 'DISTANCE']
+
+# Pair plot to explore relationships between numerical features
+sns.pairplot(df[numerical_cols])
+plt.suptitle("Pair Plot of ArrivalDelay, DepartureDelay, and FlightDistance", y=1.02)
+plt.show()
+
+# Compute the correlation matrix
+correlation_matrix = df[numerical_cols].corr()
+
+# Heatmap to visualize correlation
+plt.figure(figsize=(8, 6))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
+plt.title("Correlation Heatmap")
+plt.show()
