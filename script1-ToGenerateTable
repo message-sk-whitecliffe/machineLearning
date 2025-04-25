@@ -1,0 +1,36 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from scipy.stats import skew
+
+# Load the dataset
+df = pd.read_csv('flightsdelay.csv')
+
+# Select the relevant columns
+numerical_features = ['ARR_DELAY', 'DEP_DELAY', 'DISTANCE']
+df_selected = df[numerical_features]
+
+# Drop rows with missing values in selected features
+df_selected = df_selected.dropna()
+
+# Calculate descriptive statistics
+print("Descriptive Statistics:\n")
+print(df_selected.describe())
+
+# Check skewness
+print("\nSkewness:\n")
+for feature in numerical_features:
+    skew_value = skew(df_selected[feature])
+    print(f"{feature}: Skew = {skew_value:.2f} - {'Right-skewed' if skew_value > 0 else 'Left-skewed' if skew_value < 0 else 'Symmetric'}")
+
+# Optional: Plot histograms
+df_selected.hist(column=numerical_features, bins=50, figsize=(15, 5), layout=(1, 3))
+plt.suptitle('Histograms of ARRIVAL_DELAY, DEPARTURE_DELAY, and DISTANCE')
+plt.tight_layout()
+plt.show()
+
+stats_table = df_selected.describe().round(2)
+stats_table.index.name = "Statistic"
+stats_table.columns = ['Arrival Delay', 'Departure Delay', 'Flight Distance']
+
+with open("desc_stats.tex", "w") as f:
+    f.write(stats_table.to_latex())
