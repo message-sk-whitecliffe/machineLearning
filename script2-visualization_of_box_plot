@@ -1,0 +1,67 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+df = pd.read_csv('flightsdelay.csv')
+
+# Set up the plot styles
+sns.set(style="whitegrid")
+
+# Creating the histograms
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 3, 1)
+sns.histplot(df['ARR_DELAY'], kde=True, color='blue', bins=50)
+plt.title('Arrival Delay Histogram')
+plt.xlabel('Arrival Delay (minutes)')
+plt.ylabel('Frequency')
+
+plt.subplot(1, 3, 2)
+sns.histplot(df['DEP_DELAY'], kde=True, color='green', bins=50)
+plt.title('Departure Delay Histogram')
+plt.xlabel('Departure Delay (minutes)')
+plt.ylabel('Frequency')
+
+plt.subplot(1, 3, 3)
+sns.histplot(df['DISTANCE'], kde=True, color='red', bins=50)
+plt.title('Flight Distance Histogram')
+plt.xlabel('Flight Distance (miles)')
+plt.ylabel('Frequency')
+
+plt.tight_layout()
+plt.savefig("histograms.png")
+plt.show()
+
+# Creating box plots
+plt.figure(figsize=(12, 6))
+
+plt.subplot(1, 2, 1)
+sns.boxplot(x=df['ARR_DELAY'], color='blue')
+plt.title('Arrival Delay Box Plot')
+plt.xlabel('Arrival Delay (minutes)')
+
+plt.subplot(1, 2, 2)
+sns.boxplot(x=df['DEP_DELAY'], color='green')
+plt.title('Departure Delay Box Plot')
+plt.xlabel('Departure Delay (minutes)')
+
+plt.tight_layout()
+plt.savefig("boxplots.png")
+plt.show()
+
+# Creating violin plots
+plt.figure(figsize=(12, 6))
+
+plt.subplot(1, 2, 1)
+sns.violinplot(x=df['ARR_DELAY'], color='blue')
+plt.title('Arrival Delay Violin Plot')
+plt.xlabel('Arrival Delay (minutes)')
+
+plt.subplot(1, 2, 2)
+sns.violinplot(x=df['DEP_DELAY'], color='green')
+plt.title('Departure Delay Violin Plot')
+plt.xlabel('Departure Delay (minutes)')
+
+plt.tight_layout()
+plt.savefig("violinplots.png")
+plt.show()
